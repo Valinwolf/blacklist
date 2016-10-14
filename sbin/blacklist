@@ -40,6 +40,9 @@ upgrade()
 	git reset --hard origin/master &>/dev/null
 	echo "Finishing Up..."
 	git checkout -t origin/master &>/dev/null
+	chmod a+x /usr/local/sbin/blacklist &>/dev/null
 	echo "Cleaning Up..."
 	rm -fr .git* &>/dev/null
 }
+
+$1
