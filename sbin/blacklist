@@ -20,26 +20,26 @@ update()
 	. $SOURCES
 	for IP in `cat $LIST|sort -V|uniq`
 	do
-		ufw deny from $IP to any >/dev/null
+		ufw deny from $IP to any &>/dev/null
 	done
 	echo "Reloading Firewall..."
-	ufw reload >/dev/null
+	ufw reload &>/dev/null
 	echo "Cleaning Up..."
-	rm $LIST >/dev/null
+	rm $LIST &>/dev/null
 }
 
 upgrade()
 {
 	echo "Initializing..."
 	cd /usr/local
-	git init >/dev/null
+	git init &>/dev/null
 	echo "Checking Remote..."
-	git remote add origin https://github.com/halitalf/blacklist.git >/dev/null
+	git remote add origin https://github.com/halitalf/blacklist.git &>/dev/null
 	echo "Fetching Updates..."
-	git fetch --all >/dev/null >/dev/null
-	git reset --hard origin/master >/dev/null
+	git fetch --all &>/dev/null
+	git reset --hard origin/master &>/dev/null
 	echo "Finishing Up..."
-	git checkout -t origin/master >/dev/null
+	git checkout -t origin/master &>/dev/null
 	echo "Cleaning Up..."
-	rm -fr .git* >/dev/null
+	rm -fr .git* &>/dev/null
 }
