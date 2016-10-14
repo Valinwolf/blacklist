@@ -16,16 +16,16 @@ update()
 {
 	LIST=`mktemp`
 	echo "Updating Sources..."
-	wget -qqq https://raw.githubusercontent.com/halitalf/blacklist/master/sources -O $SOURCES
+	wget -qqq https://raw.githubusercontent.com/halitalf/blacklist/master/etc/blacklist.src -O $SOURCES
 	. $SOURCES
 	for IP in `cat $LIST|sort -V|uniq`
 	do
 		ufw deny from $IP to any >/dev/null
 	done
 	echo "Reloading Firewall..."
-	ufw reload
+	ufw reload >/dev/null
 	echo "Cleaning Up..."
-	rm $LIST
+	rm $LIST >/dev/null
 }
 
 upgrade()
