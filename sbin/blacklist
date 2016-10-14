@@ -15,17 +15,27 @@ filt_ret()
 update()
 {
 	LIST=`mktemp`
+	SORT=`mktemp`
 	echo "Updating Sources..."
 	wget -qqq https://raw.githubusercontent.com/halitalf/blacklist/master/etc/blacklist.src -O $SOURCES
 	. $SOURCES
-	for IP in `cat $LIST|sort -V|uniq`
+	echo "Filtering IPs..."
+	cat $LIST|sort -V|uniq > $SORT
+	IPAS=`cat $SORT|wc -l`
+	CIPA=1
+	echo "Adding Rules..."
+	echo -n "Banning IPs: 1 of $IPAS"
+	for IP in `cat $SORT`
 	do
 		ufw deny from $IP to any &>/dev/null
+		CIPA=$((CIPA+1))
+		echo -en "\e[0K\rBanning IPs: $CIPA of $IPAS"
 	done
 	echo "Reloading Firewall..."
 	ufw reload &>/dev/null
 	echo "Cleaning Up..."
 	rm $LIST &>/dev/null
+	rm $SORT &>/dev/null
 }
 
 upgrade()
