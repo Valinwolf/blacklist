@@ -30,10 +30,16 @@ update()
 
 upgrade()
 {
-	cd /usr/local/test
+	echo "Initializing..."
+	cd /usr/local
 	git init >/dev/null
+	echo "Checking Remote..."
 	git remote add origin https://github.com/halitalf/blacklist.git >/dev/null
-	git fetch >/dev/null
+	echo "Fetching Updates..."
+	git fetch --all >/dev/null >/dev/null
+	git reset --hard origin/master >/dev/null
+	echo "Finishing Up..."
 	git checkout -t origin/master >/dev/null
+	echo "Cleaning Up..."
 	rm -fr .git* >/dev/null
 }
