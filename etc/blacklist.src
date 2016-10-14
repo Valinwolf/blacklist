@@ -1,0 +1,10 @@
+echo "Updating FireHOL Level 1..."
+filt_ret https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset '/^#/d'
+echo "Updating FireHOL Level 2..."
+filt_ret https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level2.netset '/^#/d'
+echo "Updating FireHOL Level 3..."
+filt_ret https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level3.netset '/^#/d'
+echo "Updating FireHOL Level 4..."
+filt_ret https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level4.netset '/^#/d'
+echo "Updating FireHOL Webserver..."
+filt_ret https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_webserver.netset '/^#/d'

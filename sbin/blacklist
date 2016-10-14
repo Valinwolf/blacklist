@@ -1,0 +1,39 @@
+#!/bin/bash
+SOURCES="/usr/local/etc/blacklist.src"
+BASEDIR="/usr/local/"
+
+ret()
+{
+	wget -qqq "$1" -O- >> $LIST
+}
+
+filt_ret()
+{
+	wget -qqq "$1" -O- | sed "$2" >> $LIST
+}
+
+update()
+{
+	LIST=`mktemp`
+	echo "Updating Sources..."
+	wget -qqq https://raw.githubusercontent.com/halitalf/blacklist/master/sources -O $SOURCES
+	. $SOURCES
+	for IP in `cat $LIST|sort -V|uniq`
+	do
+		ufw deny from $IP to any >/dev/null
+	done
+	echo "Reloading Firewall..."
+	ufw reload
+	echo "Cleaning Up..."
+	rm $LIST
+}
+
+upgrade()
+{
+	cd /usr/local/test
+	git init >/dev/null
+	git remote add origin https://github.com/halitalf/blacklist.git >/dev/null
+	git fetch >/dev/null
+	git checkout -t origin/master >/dev/null
+	rm -fr .git* >/dev/null
+}
