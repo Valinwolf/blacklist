@@ -45,4 +45,11 @@ upgrade()
 	rm -fr .git* &>/dev/null
 }
 
-$1
+case $1 in
+	upgrade)
+		upgrade
+	update)
+		update
+	*)
+		echo "Unknown Command"
+esac
