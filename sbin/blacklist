@@ -30,6 +30,7 @@ update()
 		ufw deny from $IP to any &>/dev/null
 		CIPA=$((CIPA+1))
 		echo -en "\e[0K\rBanning IPs: $CIPA of $IPAS"
+		sleep 0.1
 	done
 	echo "Reloading Firewall..."
 	ufw reload &>/dev/null
